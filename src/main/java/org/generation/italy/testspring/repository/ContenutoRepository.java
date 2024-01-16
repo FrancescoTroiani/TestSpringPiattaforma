@@ -14,5 +14,7 @@ public interface ContenutoRepository extends JpaRepository<Contenuto, Integer>{
 	List<Contenuto> findByTipologia(String tipologia);
 	List<Contenuto> findByGenere(String genere);
 	List<Contenuto> findByAnnoDiProduzioneBetween(Integer annoDiProduzionePartenza, Integer annoDiProduzioneArrivo);
-	
+	List<Contenuto> findByTitoloLikeAndGenere(String titolo, String genere);
+	@Query("select d from Contenuto d where d.durata > (?1)")
+	List<Contenuto> findByFasceDurata(int fascia);
 }

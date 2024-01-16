@@ -34,7 +34,8 @@ public class ContenutoController{
 			@RequestParam(required=false) String genere,
 			@RequestParam(required=false) Integer annoDiProduzionePartenza,
 			@RequestParam(required=false) Integer annoDiProduzioneArrivo,
-			@RequestParam(required=false) String ordinamento) throws Exception {
+			@RequestParam(required=false) String ordinamento,
+			@RequestParam(required=false) Integer durata) throws Exception {
 		
 		
 		ArrayList<Contenuto> elencoContenuto = new ArrayList<>();
@@ -49,7 +50,12 @@ public class ContenutoController{
 		else if (annoDiProduzionePartenza != null && genere == null && titolo == null)
 			elencoContenuto = (ArrayList<Contenuto>) contenutoRepository
 					.findByAnnoDiProduzioneBetween(annoDiProduzionePartenza, annoDiProduzioneArrivo);
+		else if (titolo != null && genere != null && tipologia == null)
+			elencoContenuto = (ArrayList<Contenuto>) contenutoRepository.findByTitoloLikeAndGenere("%" + titolo + "%", genere);
 		
+			
+			elencoContenuto = (ArrayList<Contenuto>) contenutoRepository.findByFasceDurata(110);
+			
 		if (ordinamento != null) {
 			if (ordinamento.equals("asc"))
 				Collections.sort(elencoContenuto);

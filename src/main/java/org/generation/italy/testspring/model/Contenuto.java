@@ -26,7 +26,7 @@ public class Contenuto implements Comparable<Contenuto> {
 	private Integer annoDiProduzione;
 	
 	@Column(nullable=false)
-	private Integer Durata;
+	private Integer durata;
 	
 	public Contenuto() {
 		super();
@@ -38,7 +38,7 @@ public class Contenuto implements Comparable<Contenuto> {
 		this.tipologia = tipologia;
 		this.genere = genere;
 		this.annoDiProduzione = annoDiProduzione;
-		Durata = durata;
+		durata = durata;
 	}
 
 	
@@ -63,13 +63,13 @@ public class Contenuto implements Comparable<Contenuto> {
 	}
 
 	public Integer getDurata() {
-		return Durata;
+		return durata;
 	}
 
 	@Override
 	public String toString() {
 		return "Contenuto [titolo=" + titolo + ", tipologia=" + tipologia + ", genere=" + genere + ", annoDiProduzione="
-				+ annoDiProduzione + ", Durata=" + Durata + "]";
+				+ annoDiProduzione + ", Durata=" + durata + "]";
 	}
 
 	@Override
