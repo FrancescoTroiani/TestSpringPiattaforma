@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Contenuto implements Comparable<Contenuto> {
@@ -28,6 +29,9 @@ public class Contenuto implements Comparable<Contenuto> {
 	@Column(nullable=false)
 	private Integer durata;
 	
+	@ManyToOne(optional = false)
+	private Regista regista;
+	
 	public Contenuto() {
 		super();
 	}
@@ -38,7 +42,6 @@ public class Contenuto implements Comparable<Contenuto> {
 		this.tipologia = tipologia;
 		this.genere = genere;
 		this.annoDiProduzione = annoDiProduzione;
-		durata = durata;
 	}
 
 	
@@ -64,6 +67,10 @@ public class Contenuto implements Comparable<Contenuto> {
 
 	public Integer getDurata() {
 		return durata;
+	}
+
+	public Regista getRegista() {
+		return regista;
 	}
 
 	@Override

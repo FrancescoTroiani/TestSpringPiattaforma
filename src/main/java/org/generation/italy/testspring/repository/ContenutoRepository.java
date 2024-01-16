@@ -7,7 +7,9 @@ import java.util.List;
 import org.generation.italy.testspring.model.Contenuto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ContenutoRepository extends JpaRepository<Contenuto, Integer>{
 	
 	List<Contenuto> findByTitoloLike(String titolo);

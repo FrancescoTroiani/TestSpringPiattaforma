@@ -1,4 +1,4 @@
-package org.generation.italy.testspring.Controller;
+package org.generation.italy.testspring.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
