@@ -42,7 +42,7 @@ public class RegistaController {
 		{
 			StringBuilder dettaglio=new StringBuilder();
 			dettaglio.append(optRegista.get().toString()+"<br>");
-			dettaglio.append("Registi forniti: <br>");
+			dettaglio.append("Film forniti: <br>");
 			for (Contenuto c: optRegista.get().getElencoContenuti())
 				dettaglio.append(c.toString()+"<br>");
 			return dettaglio.toString();

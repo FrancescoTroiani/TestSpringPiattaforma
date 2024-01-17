@@ -39,7 +39,7 @@ public class ContenutoController{
 		
 		
 		ArrayList<Contenuto> elencoContenuto = new ArrayList<>();
-		if (titolo == null && tipologia == null && genere == null && annoDiProduzionePartenza == null)
+		if (titolo == null && tipologia == null && genere == null && annoDiProduzionePartenza == null && durata==null)
 			elencoContenuto = (ArrayList<Contenuto>) contenutoRepository.findAll();
 		else if (titolo != null && tipologia == null && genere == null)
 			elencoContenuto = (ArrayList<Contenuto>) contenutoRepository.findByTitoloLike("%" + titolo + "%");
@@ -52,9 +52,8 @@ public class ContenutoController{
 					.findByAnnoDiProduzioneBetween(annoDiProduzionePartenza, annoDiProduzioneArrivo);
 		else if (titolo != null && genere != null && tipologia == null)
 			elencoContenuto = (ArrayList<Contenuto>) contenutoRepository.findByTitoloLikeAndGenere("%" + titolo + "%", genere);
-		
-			
-			elencoContenuto = (ArrayList<Contenuto>) contenutoRepository.findByFasceDurata(110);
+		else if (durata != null && titolo == null && genere == null && tipologia == null)
+			elencoContenuto = (ArrayList<Contenuto>) contenutoRepository.findByFasceDurata(durata);
 			
 		if (ordinamento != null) {
 			if (ordinamento.equals("asc"))
