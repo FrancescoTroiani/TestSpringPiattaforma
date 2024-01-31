@@ -2,12 +2,16 @@ package org.generation.italy.testspring.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Optional;
 
+import org.generation.italy.testspring.model.Attore;
 import org.generation.italy.testspring.model.Contenuto;
 import org.generation.italy.testspring.repository.ContenutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,14 +25,13 @@ public class ContenutoController{
 	ContenutoRepository contenutoRepository;
 	
 	@GetMapping
-	@ResponseBody
 	public String index() {
-		return ("Benvenuto nella gestione della piattaforma");
+		return "Contenuto/Home";
 	}
 	
 	@GetMapping("/elenco")
-	@ResponseBody
 	public String elencoContenuti(
+			Model model,
 			@RequestParam(required=false) String titolo,
 			@RequestParam(required=false) String tipologia,
 			@RequestParam(required=false) String genere,
@@ -52,7 +55,8 @@ public class ContenutoController{
 					.findByAnnoDiProduzioneBetween(annoDiProduzionePartenza, annoDiProduzioneArrivo);
 		else if (titolo != null && genere != null && tipologia == null)
 			elencoContenuto = (ArrayList<Contenuto>) contenutoRepository.findByTitoloLikeAndGenere("%" + titolo + "%", genere);
-		else if (durata != null && titolo == null && genere == null && tipologia == null)
+		
+		else if (titolo == null && genere == null && tipologia == null && durata!=null)
 			elencoContenuto = (ArrayList<Contenuto>) contenutoRepository.findByFasceDurata(durata);
 			
 		if (ordinamento != null) {
@@ -63,11 +67,44 @@ public class ContenutoController{
 			else
 				throw new Exception("Ordinamento non valido");
 		}
+		
+		model.addAttribute("elenco",elencoContenuto);
 
-		StringBuilder elenco = new StringBuilder();
+		/*StringBuilder elenco = new StringBuilder();
+		elenco.append("<br><br>");
+		elenco.append("Numero contenuti: "+ elencoContenuto.size() +"<br>");
 		for (Contenuto c : elencoContenuto)
+		{
 			elenco.append(c.toString() + "<br>");
-		return elenco.toString();
+			if (c.getElencoAttori().size() >0)
+			{
+		     elenco.append("Attori: <br>");
+		for (Attore a: c.getElencoAttori())
+		{
+			
+			elenco.append("---"+a.toString()+"<br>");
+		    elenco.append("<br>");
+		}
+			}
+			
+		}*/
+		return "Contenuto/Elenco";
+		}
 
+	@GetMapping("{id}")
+	public String dettaglioContenuto(Model model, @PathVariable Integer id) {
+		Optional<Contenuto> optContenuto=contenutoRepository.findById(id);
+		if (optContenuto.isPresent())		//il prodotto è stato trovato
+		{
+			Contenuto c= optContenuto.get();
+			/*return optContenuto.get().toString();
+		else*/
+			
+			model.addAttribute("contenuto",c);
+			
+			return "Contenuto/Dettaglio";
+		}
+		else
+			return "Contenuto/NonTrovato";
 }
-}
+	}

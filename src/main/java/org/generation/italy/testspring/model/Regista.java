@@ -2,6 +2,8 @@ package org.generation.italy.testspring.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +23,7 @@ public class Regista {
 	
 	private String nazionalita;
 	
+	@JsonBackReference
 	@OneToMany(mappedBy = "regista")
 	List<Contenuto> elencoContenuti;
 
